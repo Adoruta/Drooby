@@ -7,7 +7,7 @@ The main [Tutorial](http://bit.ly/Tech_Perplexed "How to create an infinite medi
 ## Installation:
 
 Run on Ubuntu or Debian with these commands:  
-`sudo wget http://bit.ly/34RZGfj -O /tmp/install.sh && sudo bash /tmp/install.sh`
+`sudo wget https://bit.ly/Drooby -O /tmp/install.sh && sudo bash /tmp/install.sh`
 
 ## Supported Apps:
 

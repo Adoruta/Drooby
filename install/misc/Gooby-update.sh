@@ -13,7 +13,7 @@ if [[ ${REPLY} =~ ^[Yy]$ ]]; then
 	echo Updating Gooby to ${GOOBYBRANCH}; echo
 
 	sudo rm -r /opt/.Gooby > /dev/null 2>&1
-	sudo git clone -b ${GOOBYBRANCH} https://github.com/Adoruta/Gooby /opt/.Gooby
+	sudo git clone -b ${GOOBYBRANCH} https://github.com/Adoruta/Drooby /opt/.Gooby
 
 	if [ -d /opt/.Gooby ]; then
 		sudo rm -r /opt/Gooby

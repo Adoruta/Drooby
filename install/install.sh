@@ -35,7 +35,7 @@ echo
 # Finalizing
 
 sudo rm -r /opt/.Gooby > /dev/null 2>&1
-sudo git clone -b master https://github.com/Adoruta/Gooby /opt/.Gooby > /dev/null 2>&1
+sudo git clone -b master https://github.com/Adoruta/Drooby /opt/.Gooby > /dev/null 2>&1
 
 if [ -d /opt/.Gooby ]; then
 	sudo rm -r /opt/Gooby > /dev/null 2>&1
