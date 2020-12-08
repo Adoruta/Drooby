@@ -1,0 +1,47 @@
+#
+# Sonarr4K - TV Show catalog and management preview
+#
+  sonarr4k:
+    restart: unless-stopped
+    image: linuxserver/sonarr:preview
+    container_name: sonarr4k
+    hostname: sonarr4k
+    cpu_shares: 2048
+    ports:
+      - 8990:8989
+    depends_on:
+      nginx-proxy:
+        condition: service_healthy
+      letsencrypt-nginx-proxy-companion:
+        condition: service_started
+        #deluge:
+        #condition: service_healthy
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${CONFIGS}/Sonarr4k:/config
+      - ${HOME}/logs:/config/logs
+      - ${MEDIA}:/Media
+      - ${DOWNLOADS}:/Downloads
+      - /bin/netstat:/bin/netstat:ro
+    environment:
+      - PGID=${GROUPID}
+      - PUID=${USERID}
+      - TZ=${TIMEZONE}
+      - VIRTUAL_HOST=sonarr4k.${MYDOMAIN}
+      - VIRTUAL_PORT=8990
+      - VIRTUAL_NETWORK=nginx-proxy
+      - LETSENCRYPT_HOST=sonarr4k.${MYDOMAIN}
+      - LETSENCRYPT_EMAIL=${MYEMAIL}
+    healthcheck:
+      test: ["CMD-SHELL", "netstat -ntlp | grep :8989 && mountpoint /Media"]
+      interval: 10s
+      timeout: 2s
+      retries: 3
+    blkio_config:
+      weight: 150
+      #device_read_bps:
+      #- path: /dev/md1
+      #rate: '50mb'
+      #device_write_bps:
+      #- path: /dev/md1
+      #rate: '50mb'

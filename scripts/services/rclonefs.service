@@ -1,0 +1,39 @@
+[Unit]
+Description=Mount Cloud Storage Drive (Rclone)
+After=syslog.target local-fs.target network.target
+
+[Service]
+EnvironmentFile=/var/local/Gooby/Docker/.env
+
+Type=simple
+User=GOOBYUSER
+Group=GOOBYUSER
+ExecStartPre=/bin/mkdir -p ${RCLONEMOUNT}
+ExecStart=/usr/bin/rclone mount \
+	--dir-cache-time 30m \
+	--vfs-cache-mode full \
+	--vfs-read-chunk-size 128M \
+	--vfs-cache-max-size 500G \
+	--vfs-read-ahead 1G \
+	--buffer-size 128M \
+	--allow-other \
+	--gid ${USERID} \
+	--log-level INFO \
+	--log-file ${HOMEDIR}/logs/rclone.log \
+	--timeout 1h \
+	--tpslimit 10 \
+	--tpslimit-burst 10 \
+	--uid ${GROUPID} \
+	--umask 002 \
+	--user-agent GOOBYUSER \
+	--rc \
+	--rc-pass ${RCLONEPASSWORD} \
+	--rc-user ${RCLONEUSERNAME} \
+	--config ${HOMEDIR}/.config/rclone/rclone.conf \
+	${RCLONESERVICE}:${RCLONEFOLDER} ${RCLONEMOUNT}
+ExecStop=/bin/fusermount -uz ${RCLONEMOUNT}
+ExecStop=/bin/rmdir ${RCLONEMOUNT}
+Restart=always
+
+[Install]
+WantedBy=default.target unionfs.service mergerfs.service

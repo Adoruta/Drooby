@@ -1,0 +1,15 @@
+#!/bin/bash
+
+source /opt/Gooby/menus/variables.sh
+
+if [ "${EUID}" -ne 0 ]; then
+
+	if [ ! -e ${CONFIGS}/Docker/.env ]; then /opt/Gooby/install/server/server-init.sh; fi
+
+	/opt/Gooby/menus/main.sh
+
+else
+
+	/opt/Gooby/install/server/user-create.sh
+
+fi

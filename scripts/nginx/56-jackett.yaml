@@ -1,0 +1,29 @@
+#
+# Jackett - Download proxy server
+#
+  jackett:
+    restart: unless-stopped
+    image: linuxserver/jackett
+    container_name: jackett
+    hostname: jackett
+    cpu_shares: 1024
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${CONFIGS}/Jackett:/config
+      - ${MEDIA}:/Media
+      - ${DOWNLOADS}:/Downloads
+    environment:
+      - PUID=${USERID}
+      - PGID=${GROUPID}
+      - TZ=${TIMEZONE}
+      - UMASK_SET=022
+      - VIRTUAL_HOST=jackett.${MYDOMAIN}
+      - VIRTUAL_PORT=9117
+      - VIRTUAL_NETWORK=nginx-proxy
+      - LETSENCRYPT_HOST=jackett.${MYDOMAIN}
+      - LETSENCRYPT_EMAIL=${MYEMAIL}
+    healthcheck:
+      test: ["CMD-SHELL", "netstat -ntlp | grep :9117"]
+      interval: 10s
+      timeout: 2s
+      retries: 3

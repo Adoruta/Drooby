@@ -1,0 +1,30 @@
+#
+# nzbhydra2 - Download proxy server
+#
+  nzbhydra2:
+    restart: unless-stopped
+    image: linuxserver/nzbhydra2
+    container_name: nzbhydra2
+    hostname: nzbhydra2
+    cpu_shares: 1024
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${CONFIGS}/nzbhydra2:/config
+      - ${MEDIA}:/Media
+      - ${DOWNLOADS}:/downloads
+      - /bin/netstat:/bin/netstat:ro
+    environment:
+      - PUID=${USERID}
+      - PGID=${GROUPID}
+      - TZ=${TIMEZONE}
+      - UMASK_SET=022
+      - VIRTUAL_HOST=nzbhydra2.${MYDOMAIN}
+      - VIRTUAL_PORT=5076
+      - VIRTUAL_NETWORK=nginx-proxy
+      - LETSENCRYPT_HOST=nzbhydra2.${MYDOMAIN}
+      - LETSENCRYPT_EMAIL=${MYEMAIL}
+    healthcheck:
+      test: ["CMD-SHELL", "netstat -ntlp | grep :5076"]
+      interval: 10s
+      timeout: 2s
+      retries: 3
