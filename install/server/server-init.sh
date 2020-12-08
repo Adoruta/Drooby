@@ -27,7 +27,7 @@ echo "${MYDOMAIN}" > ${CONFIGVARS}/mydomain
 echo "${MYEMAIL}" > ${CONFIGVARS}/myemail
 
 if [ ! -e ${CONFIGVARS}/goobybranch ]; then
-  echo "master" > ${CONFIGVARS}/goobybranch
+  echo "main" > ${CONFIGVARS}/goobybranch
 fi
 
 if [ ! -e ${CONFIGVARS}/proxyversion ]; then
