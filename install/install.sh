@@ -53,8 +53,7 @@ if [ -d /opt/.Gooby ]; then
 	sudo chmod 755 /bin/rstats
 	sudo chmod 755 /bin/sizer
 	sudo chmod 755 /bin/syncmount
-	sudo chmod 755 /bin/syncfilemount
-	sudo chmod 755 /bin/resetclonestats
+	sudo chmod 755 /bin/resetrclonestats
 	sudo chmod 755 /bin/filestosync
 fi
 
