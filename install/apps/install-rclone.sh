@@ -95,8 +95,7 @@ else
 		sleep 10; sudo systemctl start mergerfs.service
 
 		# Create syncmount cron
-		crontab -l | grep 'syncmount.sh' || (crontab -l 2>/dev/null; echo "*/15 2-5 * * * /opt/Gooby/scripts/cron/syncmount.sh > /dev/null 2>&1") | crontab -
-		crontab -l | grep 'syncfilemount.sh' || (crontab -l 2>/dev/null; echo "*/5 6-23,0-1 * * * /opt/Gooby/scripts/cron/syncfilemount.sh > /dev/null 2>&1") | crontab -
+		crontab -l | grep 'syncmount.sh' || (crontab -l 2>/dev/null; echo "* * * * * /opt/Gooby/scripts/cron/syncmount.sh > /dev/null 2>&1") | crontab -
 
 		echo
 		echo " Done!"
